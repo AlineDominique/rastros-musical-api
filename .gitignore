@@ -24,3 +24,8 @@ data/*.wal
 # IDEs
 .vscode/
 .idea/
+
+# WEB
+node_modules/
+dist/
+.vite/

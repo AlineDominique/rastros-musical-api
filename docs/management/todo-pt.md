@@ -70,12 +70,12 @@ Preencher a lacuna temporal entre as origens históricas dos gêneros (pré-2004
 ## 🟠 Fase 4: Interface e Visualização (React + Deck.gl)
 
 ### 🎯 MVP (Mapa Vivo com Controles Mínimos)
-- [ ] **Setup do Framework (/web)**: Inicializar projeto React (Vite) sem i18n inicial.
-- [ ] **CORS**: Configurar origens permitidas para o frontend consumir a API.
+- [X] **Setup do Framework (/web)**: Inicializar projeto React (Vite) sem i18n inicial.
+- [X] **CORS**: Configurar origens permitidas para o frontend consumir a API.
 - [ ] **Mapa com ScatterplotLayer**: Exibir pontos coloridos representando a primeira aparição do gênero nos países.
-- [ ] **Dropdown de Gênero**: Selecionar um gênero da lista obtida da API.
-- [ ] **Componente Time-Slider**: Slider (1970–2026) que dispara novas chamadas à API ao ser alterado.
-- [ ] **Tooltip simples**: Mostrar país e ano ao passar o mouse sobre um ponto.
+- [X] **Dropdown de Gênero**: Selecionar um gênero da lista obtida da API.
+- [X] **Componente Time-Slider**: Slider (1970–2026) que dispara novas chamadas à API ao ser alterado.
+- [X] **Tooltip simples**: Mostrar país e ano ao passar o mouse sobre um ponto.
 
 ### 📈 Incrementações Futuras
 - [ ] **Setup i18n**: Adicionar suporte a PT/EN/ES nos componentes da interface.

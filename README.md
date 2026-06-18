@@ -149,3 +149,4 @@ Swagger docs: [https://rastros-musical.onrender.com/docs](https://rastros-musica
 - **Phase 1 (Foundation):** Completed ✅
 - **Phase 2 (Data Engineering):** Completed ✅
 - **Phase 3 (Service API):** Completed ✅
+- **Phase 4 (Interface & Visualization: React + Deck.gl):** Completed ✅

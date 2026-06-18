@@ -70,12 +70,12 @@ Fill the temporal gap between historical genre origins (pre-2004) and Google Tre
 ## 🟠 Phase 4: Interface & Visualization (React + Deck.gl)
 
 ### 🎯 MVP (Live Map with Minimal Controls)
-- [ ] **Framework Setup (/web)**: Initialize React project (Vite) without initial i18n.
-- [ ] **CORS**: Configure allowed origins for frontend consumption.
-- [ ] **ScatterplotLayer Map**: Display colored dots representing the first appearance of a genre in each country.
-- [ ] **Genre Dropdown**: Select a genre from the list obtained via the API.
-- [ ] **Time-Slider Component**: Slider (1970–2026) that triggers new API calls on change.
-- [ ] **Simple Tooltip**: Show country and year on hover.
+- [X] **Framework Setup (/web)**: Initialize React project (Vite) without initial i18n.
+- [X] **CORS**: Configure allowed origins for frontend consumption.
+- [X] **ScatterplotLayer Map**: Display colored dots representing the first appearance of a genre in each country.
+- [X] **Genre Dropdown**: Select a genre from the list obtained via the API.
+- [X] **Time-Slider Component**: Slider (1970–2026) that triggers new API calls on change.
+- [X] **Simple Tooltip**: Show country and year on hover.
 
 ### 📈 Future Increments
 - [ ] **i18n Setup**: Add PT/EN/ES support to UI components.
@@ -90,9 +90,9 @@ Fill the temporal gap between historical genre origins (pre-2004) and Google Tre
 ### 🎯 MVP (Manual Deploy with Public Link)
 - [X] **Backend Deploy**: Deploy `/app` container to Render.
 - [ ] **Frontend Deploy**: Build and deploy `/web` to Vercel.
-- [ ] **Environment Variables**: Configure API URL in the frontend to point to Fly.io.
+- [ ] **Environment Variables**: Configure API URL in the frontend to point to Render.
 
 ### 📈 Future Increments
-- [ ] **Automated Backend Deploy**: Full CI/CD linking the repo to Fly.io via GitHub Actions.
+- [ ] **Automated Backend Deploy**: Full CI/CD linking the repo to Render via GitHub Actions.
 - [ ] **Automated Frontend Deploy**: Full CI/CD linking the repo to Vercel via GitHub Actions.
 - [ ] **Final Data Audit**: Proactive consistency check executed in the pipeline before each deploy.

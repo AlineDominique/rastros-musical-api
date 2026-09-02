@@ -29,3 +29,6 @@ data/*.wal
 node_modules/
 dist/
 .vite/
+
+# Claude
+CLAUDE.md

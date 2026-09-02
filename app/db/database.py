@@ -6,20 +6,25 @@ from contextlib import contextmanager
 
 import duckdb
 
-DATABASE_PATH = "data/rastros_musical.db"
+DEFAULT_DATABASE_PATH = "data/rastros_musical.db"
+DATABASE_PATH = os.getenv("DATABASE_PATH", DEFAULT_DATABASE_PATH)
 
 
 class DuckDBManager:
     """Manages DuckDB connections and persistence."""
 
-    def __init__(self, db_path: str = DATABASE_PATH) -> None:
+    def __init__(self, db_path: str | None = None) -> None:
         """Initializes the manager and ensures the data directory exists.
 
         Args:
-            db_path (str): Path to the .db file.
+            db_path (str | None): Path to the .db file. When omitted, falls back
+                to the DATABASE_PATH environment variable, then to
+                DEFAULT_DATABASE_PATH.
         """
-        self.db_path = db_path
-        os.makedirs(os.path.dirname(self.db_path), exist_ok=True)
+        self.db_path = db_path or DATABASE_PATH
+        directory = os.path.dirname(self.db_path)
+        if directory:
+            os.makedirs(directory, exist_ok=True)
 
     @contextmanager
     def get_connection(self) -> Generator[duckdb.DuckDBPyConnection]:

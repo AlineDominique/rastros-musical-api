@@ -33,24 +33,29 @@ O projeto foi construído para ser multilíngue, suportando nativamente:
 ## 📂 Estrutura do Projeto
 ```text
 rastros_musical/
-├── .github/workflows/  # Pipelines de CI/CD
-├── app/                # Núcleo da Aplicação
-│   ├── api/            # Endpoints FastAPI
-│   ├── core/           # Lógica de Negócio & Projeções
-│   ├── db/             # Camada de Dados (DuckDB)
-│   └── schemas/        # Contratos de Dados (Pydantic)
-│   └── tests/          # Testes agora integrados ao backend
-├── web/                # Frontend (React + Deck.gl) - Fase 4
-├── data/               # Armazenamento Particionado
-│   ├── raw/            # Dados Brutos Imutáveis
-│   └── processed/      # Dados Limpos e Transformados
+├── .github/workflows/  # Pipelines de CI/CD (GitHub Actions)
+├── app/                # Núcleo do Backend (Python & FastAPI)
+│   ├── api/            # Endpoints FastAPI (genres, propagation)
+│   ├── db/             # Conexão DuckDB, setup de schemas & camadas
+│   ├── exceptions/     # Tratadores globais de exceção (404, 500)
+│   ├── ingestion/      # Pipeline ETL: loaders Bronze → Silver → Gold
+│   ├── middleware/     # Log de requisições & configuração de logging
+│   ├── schemas/        # Contratos de Dados (Pydantic)
+│   └── tests/          # Testes unitários & de integração
+├── web/                # Frontend (React, Vite & Deck.gl)
+│   └── src/
+│       ├── api/        # Cliente HTTP do backend
+│       ├── components/ # Filtros, Mapa & Tooltip
+│       └── hooks/      # Hooks de busca de dados
+├── data/               # Arquivo DuckDB único com os schemas Medallion
+│                       # (bronze: bruto, silver: confiável, gold: analítico)
 ├── docs/               # Documentação Técnica
-│   └── architecture/   # Registros de Decisão de Arquitetura (ADRs)
-│   └── management/     # Registros de Gestão do Projeto (todos)
-├── MAkefile 
-└── pyproject.toml
-├── docker-compose.yml  
-└── Dockerfile
+│   ├── architecture/   # Registros de Decisão de Arquitetura (ADRs, EN & PT)
+│   └── management/     # Gestão do Projeto (roadmap & TODOs)
+├── Makefile            # Comandos de Automação do Projeto
+├── pyproject.toml      # Build System, Ruff & Pytest
+├── docker-compose.yml  # Orquestração dos containers
+└── Dockerfile          # Definição do container do backend
 ```
 
 
@@ -72,23 +77,25 @@ Utilizamos um `Makefile` para padronizar operações comuns. Se não tiver o `ma
 
 1.  **Build do ambiente:**
     ```bash
-    make build  # [docker-compose up --build]sim
+    make build  # [docker compose up --build -d]
     ```
 
 2.  **Executar a aplicação:**
     ```bash
-    make up     # [docker-compose up]
+    make up     # [docker compose up]
     ```
 
 3.  **Executar Testes:**
     ```bash
-    make test   # [docker-compose exec app pytest]
+    make test      # [docker compose exec app uv run pytest app/tests]
+    make test-cov  # o mesmo, com relatório de cobertura term-missing
     ```
 
 4.  **Lint & Formatação:**
     ```bash
-    make lint    # [docker-compose exec app ruff check . --fix]
-    make format  # [docker-compose exec app ruff format .]
+    make lint    # [docker compose exec app uv run ruff check .]
+    make format  # ruff format . + ruff check --fix .
+    make check   # lint + testes
     ```
 
 ### Gerenciamento de Dependências
@@ -115,7 +122,7 @@ Este projeto utiliza [uv](https://docs.astral.sh/uv/) e `pyproject.toml` (PEP 62
     ```
 
 ## Documentação
-Para informações detalhadas sobre decisões técnicas e justificativas arquiteturais, consulte os nossos Registros de Decisão de Arquitetura **(ADRs)** localizados em `docs/architeture/pt/`.
+Para informações detalhadas sobre decisões técnicas e justificativas arquiteturais, consulte os nossos Registros de Decisão de Arquitetura **(ADRs)** localizados em `docs/architecture/pt/`.
 
 ## Gestão do Projeto
 
@@ -141,3 +148,4 @@ Documentação Swagger: [https://rastros-musical.onrender.com/docs](https://rast
 - **Fase 1 (Fundação):** Concluída ✅
 - **Fase 2 (Engenharia de Dados):** Concluída ✅
 - **Fase 3 (API de Serviços):** Concluída ✅
+- **Fase 4 (Interface & Visualização: React + Deck.gl):** Concluída ✅

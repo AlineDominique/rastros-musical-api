@@ -1,6 +1,8 @@
 """Tests for seed_location."""
 
-from app.db.seed_location import seed_location
+from unittest.mock import MagicMock, patch
+
+from app.db.seed_location import main, seed_location
 
 
 def test_seed_location_populates_table(conn):
@@ -28,3 +30,17 @@ def test_seed_location_populates_table(conn):
     assert brazil[2] == "Latam"
     assert brazil[3] == -10.0
     assert brazil[4] == -55.0
+
+
+def test_main_seeds_using_db_manager():
+    """Should open a connection and seed it (entry point for `make DB_SEED`)."""
+    with (
+        patch("app.db.seed_location.db_manager") as mock_db,
+        patch("app.db.seed_location.seed_location") as mock_seed,
+    ):
+        mock_conn = MagicMock()
+        mock_db.get_connection.return_value.__enter__.return_value = mock_conn
+
+        main()
+
+        mock_seed.assert_called_once_with(mock_conn)

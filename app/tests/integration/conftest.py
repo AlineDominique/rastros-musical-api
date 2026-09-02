@@ -1,6 +1,5 @@
 """Fixtures for integration tests."""
 
-import os
 from unittest.mock import patch
 
 import pytest
@@ -11,13 +10,15 @@ from app.ingestion.ingestion_runner import run_ingestion
 
 
 @pytest.fixture(autouse=True)
-def prepare_database():
-    """Prepare the database with schemas, seed, and essential data.
+def prepare_database(tmp_path, monkeypatch):
+    """Prepare a throwaway database with schemas, seed, and essential data.
 
-    Before integration tests.
+    Points the shared db_manager at a per-test file under tmp_path, so the
+    versioned database in data/ is never touched. Every module imports the
+    same db_manager instance, so overriding db_path here redirects the whole
+    pipeline and the API.
     """
-    if os.path.exists(db_manager.db_path):
-        os.remove(db_manager.db_path)
+    monkeypatch.setattr(db_manager, "db_path", str(tmp_path / "rastros_musical.db"))
 
     setup_all()
     run_ingestion()

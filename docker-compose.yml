@@ -9,7 +9,7 @@ services:
       - "8000:8000"
     environment:
       - ENV=development
-      - DATABASE_PATH=/app/data/processed/rastros.duckdb
+      - DATABASE_PATH=/app/data/rastros_musical.db
       - PYTHONPATH=/app
     stdin_open: true
     tty: true

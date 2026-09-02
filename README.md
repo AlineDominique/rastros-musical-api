@@ -45,18 +45,23 @@ The project is built to be multilingual, natively supporting:
 rastros_musical/
 ├── .github/workflows/  # CI/CD Pipelines (GitHub Actions)
 ├── app/                # Backend Core (Python & FastAPI)
-│   ├── api/            # FastAPI Endpoints & API Logic
-│   ├── core/           # Business Logic, Projections & Services
-│   ├── db/             # Data Access Layer & DuckDB Integration
+│   ├── api/            # FastAPI Endpoints (genres, propagation)
+│   ├── db/             # DuckDB connection, schema setup & layer definitions
+│   ├── exceptions/     # Global exception handlers (404, 500)
+│   ├── ingestion/      # ETL pipeline: Bronze → Silver → Gold loaders
+│   ├── middleware/     # Request logging & logging configuration
 │   ├── schemas/        # Data Contracts & Validation (Pydantic)
 │   └── tests/          # Backend Unit & Integration Tests
-├── web/                # Frontend (React & Deck.gl) [Planned]
-├── data/               # Persistent Storage (Medallion Architecture)
-│   ├── raw/            # Bronze Layer: Immutable Raw Data
-│   └── processed/      # Silver/Gold Layers: Cleaned & Analytical Data
+├── web/                # Frontend (React, Vite & Deck.gl)
+│   └── src/
+│       ├── api/        # HTTP client for the backend
+│       ├── components/ # Filters, Map & Tooltip
+│       └── hooks/      # Data fetching hooks
+├── data/               # Single DuckDB file holding the Medallion schemas
+│                       # (bronze: raw, silver: trusted, gold: analytical)
 ├── docs/               # Technical Documentation
-│   └── architecture/   # Architecture Decision Records (ADRs)
-│   └── management/     # Project MAnagement (TODOS)
+│   ├── architecture/   # Architecture Decision Records (ADRs, EN & PT)
+│   └── management/     # Project Management (roadmap & TODOs)
 ├── Makefile            # Project Automation Commands
 ├── pyproject.toml      # Build System, Ruff & Pytest Configuration
 ├── docker-compose.yml  # Multi-container Orchestration
@@ -82,23 +87,25 @@ We use a `Makefile` to standardize common operations. If you don't have `make` i
 
 1.  **Build the environment:**
     ```bash
-    make build  # [docker-compose up --build]
+    make build  # [docker compose up --build -d]
     ```
 
 2.  **Run the application:**
     ```bash
-    make up     # [docker-compose up]
+    make up     # [docker compose up]
     ```
 
 3.  **Run Tests:**
     ```bash
-    make test   # [docker-compose exec app pytest]
+    make test      # [docker compose exec app uv run pytest app/tests]
+    make test-cov  # same, with a term-missing coverage report
     ```
 
 4.  **Lint & Format Code:**
     ```bash
-    make lint    # [docker-compose exec app ruff check . --fix]
-    make format  # [docker-compose exec app ruff format .]
+    make lint    # [docker compose exec app uv run ruff check .]
+    make format  # ruff format . + ruff check --fix .
+    make check   # lint + tests
     ```
 
 ### Managing Dependencies

@@ -1,6 +1,14 @@
 """Seed the silver.location table with country data."""
 
+import logging
+
 import duckdb
+
+from app.db.database import db_manager
+from app.middleware.logging_config import setup_logging
+
+setup_logging()
+logger = logging.getLogger("rastros-musical.seed")
 
 _LOCATIONS = [
     # Latin America
@@ -68,3 +76,15 @@ def seed_location(conn: duckdb.DuckDBPyConnection) -> None:
             sql_insert,
             [loc["code"], loc["name"], loc["region"], loc["lat"], loc["lon"]],
         )
+
+
+def main() -> None:
+    """Seed countries into the configured database."""
+    with db_manager.get_connection() as conn:
+        seed_location(conn)
+        count = conn.execute("SELECT COUNT(*) FROM silver.location").fetchone()[0]
+        logger.info("Countries seeded. Total in silver.location: %d", count)
+
+
+if __name__ == "__main__":
+    main()

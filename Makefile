@@ -40,7 +40,7 @@ DB_SETUP:
 	$(DOCKER_EXEC) uv run python -c "from app.db.setup import setup_all; setup_all()"
 
 DB_SEED:
-	$(DOCKER_EXEC) uv run python -c "from app.db.database import db_manager; from app.db.seed_location import seed_location; with db_manager.get_connection() as conn: seed_location(conn); print('Countries seeded.')"
+	$(DOCKER_EXEC) uv run python -m app.db.seed_location
 
 INGEST:
 	$(DOCKER_EXEC) uv run python -c "from app.ingestion.ingestion_runner import run_ingestion; run_ingestion()"
